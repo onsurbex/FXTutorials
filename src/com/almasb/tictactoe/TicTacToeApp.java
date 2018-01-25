@@ -111,7 +111,8 @@ public class TicTacToeApp extends Application {
 
     private class Tile extends StackPane {
         private Text text = new Text();
-
+        private boolean occupied= false; // We create a boolean named occupied, initializated in false
+        
         public Tile() {
             Rectangle border = new Rectangle(200, 200);
             border.setFill(null);
@@ -125,6 +126,8 @@ public class TicTacToeApp extends Application {
             setOnMouseClicked(event -> {
                 if (!playable)
                     return;
+                if (occupied) // If occupied is true means that the tile is occupied by X or O 
+                    return;
 
                 if (event.getButton() == MouseButton.PRIMARY) {
                     if (!turnX)
@@ -132,6 +135,7 @@ public class TicTacToeApp extends Application {
 
                     drawX();
                     turnX = false;
+                    occupied=true; // When X is drawn occupied turns true
                     checkState();
                 }
                 else if (event.getButton() == MouseButton.SECONDARY) {
@@ -140,6 +144,7 @@ public class TicTacToeApp extends Application {
 
                     drawO();
                     turnX = true;
+                    occupied= true; // Also when O is drawn occupied turns true
                     checkState();
                 }
             });
